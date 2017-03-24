@@ -1,0 +1,21 @@
+%\VignetteIndexEntry{GIS Information and STARS User manual}
+% cd '/mnt/Hitachi2GB/00NMML/ActiveRPack/SSN_package/SSN/vignettes'
+% Rscript -e "library(knitr); knit('STARS.Rnw')"
+% pdflatex STARS
+\documentclass{article}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+}
+\begin{document}
+{\LARGE
+  Please go to this link:
+
+  \vspace{.2cm}
+	\href{https://www.fs.fed.us/rm/boise/AWAE/projects/SSN_STARS/downloads/STARS/STARS_vignette2014.pdf}{STARS}
+}
+\end{document}
+

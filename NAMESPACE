@@ -1,0 +1,55 @@
+useDynLib(SSN, .registration = TRUE)
+import(igraph, MASS, maptools, lattice, sp, methods, RSQLite)
+importFrom(tools, file_ext)
+export(additive.function, BlockPredict, covparms, createDistMat, EmpiricalSemivariogram, Torgegram, getPreds, glmssn, getSSNdata.frame, GR2, importPredpts, importSSN, InfoCritCompare, noPoints, putSSNdata.frame, plot.Torgegram, plot.glmssn.predict, plot.influenceSSN, plot.SpatialStreamNetwork, predict.glmssn, SimulateOnSSN, residuals.glmssn, subsetSSN, summary.SpatialStreamNetwork, varcomp, CrossValidationSSN, CrossValidationStatsSSN, BLUP, writeSSN, updatePath, splitPredictions, print.summary.glmssn, getStreamDistMat, copyLSN2temp, getConfusionMat)
+export(as.SpatialLines, 
+as.SpatialLines.SpatialStreamNetwork,
+as.SpatialPoints, 
+as.SpatialPoints.SpatialStreamNetwork,
+as.SpatialPointsDataFrame, 
+as.SpatialPointsDataFrame.SpatialStreamNetwork, 
+as.SpatialLinesDataFrame, 
+as.SpatialLinesDataFrame.SpatialStreamNetwork)
+export(binomialDesign, hardCoreDesign, poissonDesign, systematicDesign)
+export(createSSN, iterativeTreeLayout, igraphKamadaKawai)
+importFrom(graphics,boxplot)
+S3method(hist,SpatialStreamNetwork)
+S3method(hist, influenceSSN)
+S3method(boxplot,SpatialStreamNetwork)
+S3method(qqnorm, SpatialStreamNetwork)
+S3method(qqnorm, influenceSSN)
+S3method(summary, SpatialStreamNetwork)
+S3method(print, SpatialStreamNetwork)
+S3method(plot, influenceSSN)
+S3method(plot, glmssn.predict)
+S3method(plot, SpatialStreamNetwork)
+S3method(plot, Torgegram)
+S3method(summary, glmssn)
+S3method(summary, glmssn.predict)
+S3method(summary, influenceSSN)
+S3method(names, SpatialStreamNetwork)
+S3method(print, glmssn)
+S3method(residuals, glmssn)
+S3method(print, glmssn.predict)
+S3method(print, summary.glmssn)
+S3method(print, influenceSSN)
+S3method(predict, glmssn)
+S3method(AIC, glmssn)
+S3method(as.SpatialLines, SpatialStreamNetwork)
+S3method(as.SpatialPoints, SpatialStreamNetwork)
+S3method(as.SpatialPointsDataFrame, SpatialStreamNetwork)
+S3method(as.SpatialLinesDataFrame, SpatialStreamNetwork)
+  importFrom("grDevices", "colors", "rainbow")
+  importFrom("graphics", "hist", "layout", "legend", "lines", "par",
+             "points", "text")
+  importFrom("stats", "AIC", "as.formula", "contrasts", "glm", "median",
+             "model.frame", "model.matrix", "optim", "optimize",
+             "printCoefmat", "pt", "qqnorm", "qt", "quantile", "rbinom",
+             "residuals", "rnorm", "rpois", "runif", "terms")
+  importFrom("utils", "read.table", "tail", "write.table")
+  importFrom("rgeos","gTouches")
+  importFrom("Matrix","Matrix")
+  importFrom("rgdal", "readOGR", "writeOGR")
+
+
+

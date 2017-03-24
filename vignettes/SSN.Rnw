@@ -1,0 +1,6 @@
+%\VignetteIndexEntry{SSN User manual}
+\documentclass{article}
+\begin{document}
+Stangle()
+\end{document}
+
