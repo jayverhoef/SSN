@@ -27,7 +27,7 @@ Installation of this R data package is done through the `devtools::install_githu
 install.packages("devtools")
 ```
 
-Then, use the code below>
+Then, use the code below
 
 ```
 library("devtools")
