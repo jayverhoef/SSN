@@ -21,7 +21,7 @@ Spatial statistical modeling and prediction for data on stream networks, includi
 Installation
 ------------
 
-Installation of this R data package is done through the `devtools::install_github()` function or by downloading the [source package from the latest release](https://github.com/jayverhoef/fluvgrm).  Most likely, you can just install from within R.  After starting R, first make sure that you have the devtools package.  
+Installation of this R data package is done through the `devtools::install_github()` function or by downloading the [source package from the latest release](https://github.com/jayverhoef/SSN).  Most likely, you can just install from within R.  After starting R, first make sure that you have the devtools package.  
 
 ```
 install.packages("devtools")
