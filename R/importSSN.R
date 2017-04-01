@@ -12,12 +12,9 @@ function(filepath, predpts = NULL, o.write = FALSE) {
 
   # IMPORT SHAPEFILES- these are stored as a SpatialLinesDataFrame and
   #    a SpatialPointsDataFrame
-  # Writen for R 9.2.2 --> does not work with R 2.6.1, readShapeSpatial
-  # does not work with 2.6.1, but seems to work with > 2.8.2
-  # Projection information is not imported.
 
-  edges <- readOGR(".", "edges",verbose = FALSE)
-  ##edges <- readShapeSpatial("edges")
+  edges <- readOGR(".", "edges",verbose = FALSE, stringsAsFactors = FALSE,
+           integer64 = "allow.loss")
   rownames(edges@data) <- edges@data[,"rid"]
 
 
@@ -28,8 +25,8 @@ function(filepath, predpts = NULL, o.write = FALSE) {
     stop("edges.shp does not have polyline geometry")
   }
 
-  sites <- readOGR(".", "sites",verbose = FALSE)
-  ##sites <- readShapeSpatial("sites")
+  sites <- readOGR(".", "sites",verbose = FALSE, stringsAsFactors = FALSE,
+           integer64 = "allow.loss")
   rownames(sites@data) <- sites@data[,"pid"]
   rownames(sites@coords) <- sites@data[,"pid"]
   sites@data$locID <- as.factor(sites@data$locID)
@@ -117,7 +114,8 @@ function(filepath, predpts = NULL, o.write = FALSE) {
 
   #Add prediction points here-----------------------------------------------------
   if (!is.null(predpts)) {
-      predpoints <- readOGR(".", predpts, verbose = FALSE)
+      predpoints <- readOGR(".", predpts, verbose = FALSE, stringsAsFactors = FALSE,
+           integer64 = "allow.loss")
       ##predpoints <- readShapeSpatial(predpts)
       rownames(predpoints@data) <- predpoints@data[,"pid"]
       rownames(predpoints@coords) <- predpoints@data[,"pid"]
