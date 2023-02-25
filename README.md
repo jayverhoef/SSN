@@ -55,4 +55,17 @@ Suggestion:
 Do you want to install the package (Y/n)?
 ```
 
-So type "Y"
+So type "Y".
+
+You can also use the remotes package
+
+```
+install.packages("remotes")
+```
+
+Then, use the code below
+
+```
+remotes::install_github("jayverhoef/SSN")
+```
+
