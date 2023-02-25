@@ -34,3 +34,25 @@ library("devtools")
 install_github("jayverhoef/SSN")
 ```
 
+or you can use this package instead
+
+```
+install.packages("githubinstall")
+```
+
+and use the code code below
+
+```
+library("githubinstall")
+githubinstall("SSN")
+```
+
+It will then suggest
+
+```
+Suggestion:
+ - jayverhoef/SSN  
+Do you want to install the package (Y/n)?
+```
+
+So type "Y"
