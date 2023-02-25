@@ -1,7 +1,6 @@
 
 split.predictions.createDistMat <- function(ssn, predpts = NULL, o.write = FALSE)
 	{
-
 	if(missing(predpts) || is.null(predpts) || length(predpts) == 0)
 	{
 		stop("A named collection of prediction points must be specified via the predpts option")
@@ -179,6 +178,7 @@ split.predictions.createDistMat <- function(ssn, predpts = NULL, o.write = FALSE
 
 splitPredictions <- function(ssn, predpointsID, chunksof, by, subset, new.id)
 {
+	suppressWarnings({
 	if(missing(ssn) || missing(predpointsID)) stop("Arguments ssn and predpointsID must be specified")
 
 	if(sum(c(!missing(chunksof), !missing(by), !missing(subset))) != 1) stop("Only one of 'chunksof', 'by' and 'subset' can be input to splitPredictions")
@@ -247,10 +247,12 @@ splitPredictions <- function(ssn, predpointsID, chunksof, by, subset, new.id)
                                         pid.vec <- append(pid.vec, tmp.pid)
                                         rm(tmp.pid)
 
-					##write to file
+					##write subset of prediction points to file
 					subsetted.spatialStructure <- sp::SpatialPointsDataFrame(coords = subsetted.coords,
-                                                  data = subsetted.data, proj4string = ssn@predpoints@SSNPoints[[i]]@proj4string)
-					maptools::writeSpatialShape(subsetted.spatialStructure, new.id)
+                                                   data = subsetted.data, proj4string = ssn@predpoints@SSNPoints[[i]]@proj4string)
+
+					##maptools::writeSpatialShape(subsetted.spatialStructure, new.id)
+                                        writeOGR(subsetted.spatialStructure, ".", new.id, verbose = FALSE, driver = "ESRI Shapefile")
 
 					#and alter the existing object
 					new.index <- length(ssn@predpoints@ID) + 1
@@ -298,7 +300,8 @@ splitPredictions <- function(ssn, predpointsID, chunksof, by, subset, new.id)
 
 				subsetted.spatialStructure <- sp::SpatialPointsDataFrame(coords = subsetted.coords,
                                           data = subsetted.data, proj4string = ssn@predpoints@SSNPoints[[i]]@proj4string)
-				maptools::writeSpatialShape(subsetted.spatialStructure, new.id)
+			  	##maptools::writeSpatialShape(subsetted.spatialStructure, new.id)
+                                writeOGR(subsetted.spatialStructure, ".", new.id, verbose = FALSE, driver = "ESRI Shapefile")
 
 				#and alter the existing object
 				new.index <- length(ssn@predpoints@ID) + 1
@@ -356,7 +359,8 @@ splitPredictions <- function(ssn, predpointsID, chunksof, by, subset, new.id)
 					#write to file
 					subsetted.spatialStructure <- sp::SpatialPointsDataFrame(coords = subsetted.coords,
                                             data = subsetted.data, proj4string = ssn@predpoints@SSNPoints[[i]]@proj4string)
-					maptools::writeSpatialShape(subsetted.spatialStructure, new.id)
+					##maptools::writeSpatialShape(subsetted.spatialStructure, new.id)
+                                        writeOGR(subsetted.spatialStructure, ".", new.id, verbose = FALSE, driver = "ESRI Shapefile")
 
 					#and alter the existing object
 					new.index <- length(ssn@predpoints@ID) + 1
@@ -376,4 +380,5 @@ splitPredictions <- function(ssn, predpointsID, chunksof, by, subset, new.id)
 
 	split.predictions.createDistMat(ssn, new.predids, o.write=FALSE)
 	return(ssn)
+	})
 }

@@ -1,7 +1,7 @@
 varcomp <-
 function(object)
 {
-	r2fe <- GR2(object)
+	r2fe <- as.numeric(GR2(object))
 	cp <- covparms(object)
 	vcs <- c(r2fe, (1 - r2fe)*cp[cp[,"Parameter"] == "parsill","Estimate"]/
 		sum(cp[cp[,"Parameter"] == "parsill","Estimate"]))

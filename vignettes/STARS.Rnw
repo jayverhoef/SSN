@@ -11,11 +11,31 @@
     urlcolor=blue,
 }
 \begin{document}
-{\LARGE
-  Please go to this link:
+\begin{center}
+{\Large STARS: SPATIAL TOOLS FOR THE ANALYSIS OF RIVER SYSTEMS}
+\end{center}
 
-  \vspace{.2cm}
-	\href{https://www.fs.fed.us/rm/boise/AWAE/projects/SSN_STARS/downloads/STARS/STARS_vignette2014.pdf}{STARS}
-}
+Fitting spatial stream-network model requires multidisciplinary skills
+in aquatic ecology/biology, geographic information science, and
+spatial statistics. In addition, specialised geographic information
+systems (GIS) tools are needed to generate the data necessary to fit
+spatial stream-network models. The Spatial Tools for the Analysis of
+River Systems (STARS) custom toolset for ArcGIS has been provided to
+help users generate these spatial data (Peterson and Ver Hoef
+2014). In previous versions, it was necessary to make use of the
+Functional Linkage of Waterbasins and Streams (FLoWS) toolbox
+(Theobald et al., 2006) during the pre-processing steps. However, the
+relevant FLoWS tools have been incorporated into STARS versions $\ge$
+2.0. The STARS toolbox provides all of the tools needed to generate
+the specific spatial data needed to fit spatial stream-network models.
+
+\vspace{.2cm}
+\noindent Please click on the blue link below to get the latest releases and documentation:
+
+
+\begin{center}
+	\href{https://www.fs.usda.gov/rm/boise/AWAE/projects/SpatialStreamNetworks.shtml}{\Large STARS}
+\end{center}
+
 \end{document}
 

@@ -70,7 +70,9 @@ RdbfwriteSSN(DBFHandle hDBF, SEXP df, SEXP pr, SEXP sc, SEXP DataTypes)
     nflds = length(df);
     nrecs = length(VECTOR_ELT(df, 0));
     for(i = 0; i < nflds; i++) {
-	strncpy(szTitle, CHAR(STRING_ELT(names,i)), 11);
+      
+      /*strncpy(szTitle, CHAR(STRING_ELT(names,i)), 11); */
+        memcpy(szTitle, CHAR(STRING_ELT(names,i)), 11);
 	szTitle[11] = '\0';
 	nWidth = INTEGER(pr)[i];
 	switch(CHAR(STRING_ELT(DataTypes, i))[0]) {

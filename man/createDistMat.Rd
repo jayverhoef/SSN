@@ -112,23 +112,23 @@ createDistMat(ssn, predpts = NULL, o.write = FALSE, amongpreds = FALSE)
 \examples{
 
 library(SSN)
-# NOT RUN
-# mf04 <- importSSN(system.file("lsndata/MiddleFork04.ssn",
-#	        package = "SSN"), o.write = TRUE)
-# use SpatialStreamNetwork object mf04 that was already created
-data(mf04)
-# for examples, copy MiddleFork04.ssn directory to R's temporary directory
+#for examples, copy MiddleFork04.ssn directory to R's temporary directory
 copyLSN2temp()
-#make sure mf04p has the correct path, will vary for each users installation
-mf04 <- updatePath(mf04, paste0(tempdir(),'/MiddleFork04.ssn'))
+# NOT RUN
+# Create a SpatialStreamNetork object that also contains prediction sites
+#mf04p <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn'), 
+#  predpts = "pred1km", o.write = TRUE)
+#use mf04p SpatialStreamNetwork object, already created
+data(mf04p)
+#for examples only, make sure mf04p has the correct path
+#if you use importSSN(), path will be correct
+mf04p <- updatePath(mf04p, paste0(tempdir(),'/MiddleFork04.ssn'))
 
 # create distance matrix among observed data points
-createDistMat(mf04, o.write = TRUE)
+createDistMat(mf04p, o.write = TRUE)
 
 # create distance matrix among observed data points
 #     and between observed and prediction points
-data(mf04p)
-mf04p <- updatePath(mf04p, paste0(tempdir(),'/MiddleFork04.ssn'))
 createDistMat(mf04p, predpts = "pred1km", o.write = TRUE)
 
 # NOT RUN include prediction to prediction site distances

@@ -202,6 +202,7 @@
 # define R_atof atof
 #endif
 
+
 #ifndef FALSE
 #  define FALSE		0
 #  define TRUE		1
@@ -209,6 +210,22 @@
 
 static int	nStringFieldLen = 0;
 static char * pszStringField = NULL;
+
+#define CPLsprintf sprintf
+#define CPLsnprintf snprintf
+
+#ifdef __cplusplus
+#define STATIC_CAST(type,x) static_cast<type>(x)
+#define REINTERPRET_CAST(type,x) reinterpret_cast<type>(x)
+#define CONST_CAST(type,x) const_cast<type>(x)
+#define SHPLIB_NULLPTR nullptr
+#else
+#define STATIC_CAST(type,x) ((type)(x))
+#define REINTERPRET_CAST(type,x) ((type)(x))
+#define CONST_CAST(type,x) ((type)(x))
+#define SHPLIB_NULLPTR NULL
+#endif
+
 
 /************************************************************************/
 /*                             SfRealloc()                              */
@@ -536,7 +553,8 @@ DBFCreate( const char * pszFilename )
 	pszBasename[i] = '\0';
 
     pszFullname = (char *) malloc(strlen(pszBasename) + 5);
-    sprintf( pszFullname, "%s.dbf", pszBasename );
+    /* sprintf( pszFullname, "%s.dbf", pszBasename ); */
+    snprintf( pszFullname, 200, "%s.dbf", pszBasename);
     free( pszBasename );
 
 /* -------------------------------------------------------------------- */
@@ -660,9 +678,12 @@ DBFAddField(DBFHandle psDBF, const char * pszFieldName,
 	pszFInfo[i] = '\0';
 
     if( (int) strlen(pszFieldName) < 10 )
-	strncpy( pszFInfo, pszFieldName, strlen(pszFieldName));
+
+      /*strncpy( pszFInfo, pszFieldName, strlen(pszFieldName));*/
+        memcpy( pszFInfo, pszFieldName, strlen(pszFieldName));
     else
-	strncpy( pszFInfo, pszFieldName, 10);
+      /*strncpy( pszFInfo, pszFieldName, 10); */
+        memcpy( pszFInfo, pszFieldName, 10);
 
     pszFInfo[11] = psDBF->pachFieldType[psDBF->nFields-1];
 
@@ -750,7 +771,10 @@ static void *DBFReadAttribute(DBFHandle psDBF, int hEntity, int iField,
 /* -------------------------------------------------------------------- */
 /*	Extract the requested field.					*/
 /* -------------------------------------------------------------------- */
-    strncpy( pszStringField,
+   /* strncpy( pszStringField,
+	     ((const char *) pabyRec) + psDBF->panFieldOffset[iField],
+	     psDBF->panFieldSize[iField] ); */
+    memcpy( pszStringField,
 	     ((const char *) pabyRec) + psDBF->panFieldOffset[iField],
 	     psDBF->panFieldSize[iField] );
     pszStringField[psDBF->panFieldSize[iField]] = '\0';
@@ -954,7 +978,8 @@ DBFGetFieldInfo( DBFHandle psDBF, int iField, char * pszFieldName,
     {
 	int	i;
 
-	strncpy( pszFieldName, (char *) psDBF->pszHeader+iField*32, 11 );
+	/*strncpy( pszFieldName, (char *) psDBF->pszHeader+iField*32, 11 ); */
+	memcpy( pszFieldName, (char *) psDBF->pszHeader+iField*32, 11 );
 	pszFieldName[11] = '\0';
 	for( i = 10; i > 0 && pszFieldName[i] == ' '; i-- )
 	    pszFieldName[i] = '\0';
@@ -1089,15 +1114,23 @@ static int DBFWriteAttributeSSN(DBFHandle psDBF, int hEntity, int iField,
 	    if( sizeof(szSField)-2 < nWidth )
 		nWidth = sizeof(szSField)-2;
 
-	    sprintf( szFormat, "%%%dd", nWidth );
-	    sprintf(szSField, szFormat, (int) *((double *) pValue) );
+	    /*sprintf( szFormat, "%%%dd", nWidth );
+	    sprintf(szSField, szFormat, (int) *((double *) pValue) );*/
+            snprintf( szFormat, sizeof(szFormat), "%%%d.%df",
+                    nWidth, psDBF->panFieldDecimals[iField] );
+            CPLsnprintf(szSField, sizeof(szSField), szFormat, *STATIC_CAST(double *, pValue) );
+            szSField[sizeof(szSField)-1] = '\0';
+
+	    
 	    if( (int)strlen(szSField) > psDBF->panFieldSize[iField] )
 	    {
 		szSField[psDBF->panFieldSize[iField]] = '\0';
 		nRetResult = FALSE;
 	    }
 
-	    strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+	    /*strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+	      szSField, strlen(szSField) ); */
+	    memcpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
 		    szSField, strlen(szSField) );
 	}
 	else
@@ -1107,16 +1140,31 @@ static int DBFWriteAttributeSSN(DBFHandle psDBF, int hEntity, int iField,
 	    if( sizeof(szSField)-2 < nWidth )
 		nWidth = sizeof(szSField)-2;
 
+            /*---------------------------------------------------*/
+	    /*Original line of code replaced in SSN v1.1 */
 	    /*sprintf( szFormat, "%%%d.%df",
 		     nWidth, psDBF->panFieldDecimals[iField] );*/
-		sprintf(szFormat, "%%.%de", nWidth - 8);
-	    sprintf(szSField, szFormat, *((double *) pValue) );
+	    
+	    /* Update in SSN 1.1 to add additional decimal places 
+	       sprintf(szFormat, "%%.%de", nWidth - 8);
+	       sprintf(szSField, szFormat, *((double *) pValue) ); */
+
+	    /* New update to remove use of sprintf */	    
+	    snprintf( szFormat, sizeof(szFormat), "%%.%de", nWidth-8 ); 
+	    snprintf(szSField, sizeof(szSField), szFormat,*STATIC_CAST(double *, pValue) );
+	     szSField[sizeof(szSField)-1] = '\0';
+		
+	    /*--------------------------------------------------*/
+	    
+
 	    if( (int) strlen(szSField) > psDBF->panFieldSize[iField] )
 	    {
 		szSField[psDBF->panFieldSize[iField]] = '\0';
 		nRetResult = FALSE;
 	    }
-	    strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+	    /*strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+	      szSField, strlen(szSField) ); */
+	    memcpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
 		    szSField, strlen(szSField) );
 	}
 	break;
@@ -1140,7 +1188,9 @@ static int DBFWriteAttributeSSN(DBFHandle psDBF, int hEntity, int iField,
 	    j = strlen((char *) pValue);
 	}
 
-	strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+	/* strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+		(char *) pValue, j ); */
+        memcpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
 		(char *) pValue, j );
 	break;
     }
@@ -1217,7 +1267,9 @@ int DBFWriteAttributeDirectly(DBFHandle psDBF, int hEntity, int iField,
 	j = strlen((char *) pValue);
     }
 
-    strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+    /* strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+       (char *) pValue, j ); */
+    memcpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
 	    (char *) pValue, j );
 
     psDBF->bCurrentRecordModified = TRUE;
@@ -1501,14 +1553,16 @@ DBFGetFieldIndex(DBFHandle psDBF, const char *pszFieldName)
     char          name[12], name1[12], name2[12];
     int           i;
 
-    strncpy(name1, pszFieldName,11);
+    /*strncpy(name1, pszFieldName,11); */
+    memcpy(name1, pszFieldName,11);
     name1[11] = '\0';
     str_to_upper(name1);
 
     for( i = 0; i < DBFGetFieldCount(psDBF); i++ )
     {
 	DBFGetFieldInfo( psDBF, i, name, NULL, NULL );
-	strncpy(name2,name,11);
+	/* strncpy(name2,name,11); */
+	memcpy(name2,name,11);
 	str_to_upper(name2);
 
 	if(!strncmp(name1,name2,10))

@@ -308,7 +308,7 @@ BlockPredict <- function(object, predpointsID)
 	## create design matrix for prediction data set
 	mf <- model.frame(formula, data = datap1)
 	mt <- attr(mf, "terms")
-	Xpred <- model.matrix(mt, mf, contrasts)
+	Xpred <- model.matrix(mt, mf)
 	Xpred <- as.matrix(Xpred[,object$sampinfo$cutX1toX2])
 
 	Vi <- object$estimates$Vi

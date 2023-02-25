@@ -10,7 +10,7 @@ additive.function <- function(ssn, VarName, afvName)
 	uniqueNets <- unique(ssn@data[,"netID"])
 	nNets <- length(uniqueNets)
 	ridData <- ssn@data
-        ridData[,"rowOrd"] <- seq(1, nrow(ridData), by = 1)
+  ridData[,"rowOrd"] <- seq(1, nrow(ridData), by = 1)
 
 	ssnPath <- ssn@path
 	driver <- RSQLite::SQLite()
@@ -42,8 +42,7 @@ additive.function <- function(ssn, VarName, afvName)
 				uniqueSplits <- unique(substr(binAtLength[,"binaryID"], 1, k - 1))
 				j <- 1
 				for(j in 1:length(uniqueSplits)) {
-                                    ind <- substr(binAtLength[,"binaryID"], 1, k - 1) == uniqueSplits[j]
-
+          ind <- substr(binAtLength[,"binaryID"], 1, k - 1) == uniqueSplits[j]
 					if(sum(ind) == 1) pival[pival[,1] == binAtLength[ind,"rid"], 2] <-
 						pival[uniqueSplits[j] == binTableOrd[,"binaryID"], 2]
 					if(sum(ind) == 2) {
@@ -60,7 +59,7 @@ additive.function <- function(ssn, VarName, afvName)
 		}
 		afvStore <- rbind(afvStore, pival)
 	}
-        dbDisconnect(connect)
+  dbDisconnect(connect)
 	##sqliteCloseConnection(connect)
 	##sqliteCloseDriver(driver)
 
@@ -68,8 +67,8 @@ additive.function <- function(ssn, VarName, afvName)
 	afvStore <- as.data.frame(afvStore)
 	ridData <- merge(ridData,afvStore, by = "rid")
 
-        ind <- is.na(ridData[,afvName])
-        ridData[ind, afvName]<-0
+  ind <- is.na(ridData[,afvName])
+  ridData[ind, afvName]<-0
 
 	## ssn@data <- ridData[order(ridData$rid),]
 	## pData <- ssn@obspoints@SSNPoints[[1]]@point.data
@@ -79,32 +78,32 @@ additive.function <- function(ssn, VarName, afvName)
         ## rownames(pData) <- rnames
 	## ssn@obspoints@SSNPoints[[1]]@point.data <- pData[order(pData$pid),]
 
-        ssn@data <- ridData[order(ridData$rowOrd),]
-        ind<- colnames(ssn@data) == "rowOrd"
-        ssn@data <- ssn@data[,!ind]
-        rownames(ssn@data) <- ssn@data[,"rid"]
+  ssn@data <- ridData[order(ridData$rowOrd),]
+  ind <- colnames(ssn@data) == "rowOrd"
+  ssn@data <- ssn@data[,!ind]
+  rownames(ssn@data) <- ssn@data[,"rid"]
 
-        pData <- ssn@obspoints@SSNPoints[[1]]@point.data
-        pData$rowNum <- c(1:nrow(pData))
-        rnames <- rownames(pData)
-        pData <- merge(pData, ridData[,c("rid",afvName)], by.x = "rid")
-        pData <- pData[order(pData$rowNum),]
-        rownames(pData) <- rnames
-        if(sum(pData$pid != as.numeric(rnames)) > 0) stop("pid values do not match rownames")
-        pData<- pData[,colnames(pData)!="rowNum"]
-        ssn@obspoints@SSNPoints[[1]]@point.data <- pData[order(pData$pid),]
+  pData <- ssn@obspoints@SSNPoints[[1]]@point.data
+  pData$rowNum <- c(1:nrow(pData))
+  rnames <- rownames(pData)
+  pData <- merge(pData, ridData[,c("rid",afvName)], by.x = "rid")
+  pData <- pData[order(pData$rowNum),]
+  rownames(pData) <- rnames
+  if(sum(pData$pid != as.numeric(rnames)) > 0) stop("pid values do not match rownames")
+  pData<- pData[,colnames(pData)!="rowNum"]
+  ssn@obspoints@SSNPoints[[1]]@point.data <- pData[order(pData$pid),]
 
 	pIDlist <- ssn@predpoints@ID
 	if(length(pIDlist) > 0) {
-            for(i in 1:length(pIDlist)) {
-		pData <- ssn@predpoints@SSNPoints[[i]]@point.data
-                rnames <- rownames(pData)
-		pData <- merge(pData, ridData[,c("rid",afvName)], by.x = "rid")
-                pData <- pData[order(pData$pid),]
-                rownames(pData) <- rnames
-		ssn@predpoints@SSNPoints[[i]]@point.data <- pData
-            }
-	}
+    for(i in 1:length(pIDlist)) {
+      pData <- ssn@predpoints@SSNPoints[[i]]@point.data
+      rnames <- rownames(pData)
+      pData <- merge(pData, ridData[,c("rid",afvName)], by.x = "rid")
+      pData <- pData[order(pData$pid),]
+      rownames(pData) <- rnames
+      ssn@predpoints@SSNPoints[[i]]@point.data <- pData
+    }
+  }
 
 	ssn
 

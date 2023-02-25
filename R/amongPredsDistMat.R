@@ -9,7 +9,7 @@ amongPredsDistMat <- function(ssn, pids, pred.num, bin.table){
 
     pred.site.no <- length(pids)
     ind.pids <- rownames(ssn@predpoints@SSNPoints[[pred.num]]@network.point.coords) %in%
-        pids
+        as.integer(pids)
 
     among_distance_matrix <- matrix(NA, nrow = pred.site.no, ncol = pred.site.no)
     diag(among_distance_matrix)<- 0

@@ -8,6 +8,7 @@
 ################################################################################
 
 subsetSSN <- function(ssn, filename, subset, clip = FALSE) {
+	suppressWarnings({
 
   dir.create(filename)
   oldwd <- getwd()
@@ -70,7 +71,9 @@ subsetSSN <- function(ssn, filename, subset, clip = FALSE) {
     edges.sub <- SpatialLinesDataFrame(edges.sl, ssn.tmp@data[ind.edges,], match.ID = FALSE)
 
     #edges.sub<- edges.sldf[edges.sldf$netID %in% netID.list,]
-    writeSpatialShape(edges.sub, "edges")
+      ##writeSpatialShape(edges.sub, "edges")
+
+    writeOGR(edges.sub, ".", "edges", verbose = FALSE, driver = "ESRI Shapefile")
     write.dbf.SSN(edges.sub@data, "edges", max_nchar = 30)
 
     ind.dup <- !duplicated(edges.sub@data$netID)
@@ -101,7 +104,8 @@ subsetSSN <- function(ssn, filename, subset, clip = FALSE) {
           data.tmp <- data.tmp[,!ind.xy]}
 
         preds.sub <- SpatialPointsDataFrame(coords = coords, data = data.tmp, proj4string = proj4string)
-        writeSpatialShape(preds.sub, pred.name)
+        ##writeSpatialShape(preds.sub, pred.name)
+        writeOGR(preds.sub, ".", pred.name, verbose = FALSE, driver = "ESRI Shapefile")
         write.dbf.SSN(preds.sub@data, pred.name, max_nchar = 30)
         rm(coords, proj4string, data.tmp, preds.sub, ind.preds, ind.xy)
     }}
@@ -126,7 +130,8 @@ subsetSSN <- function(ssn, filename, subset, clip = FALSE) {
       data.tmp <- data.tmp[,!ind.xy]}
 
   sites.sub <- SpatialPointsDataFrame(coords = coords, data = data.tmp, proj4string = proj4string)
-  writeSpatialShape(sites.sub, "sites")
+  ##writeSpatialShape(sites.sub, "sites")
+  writeOGR(sites.sub, ".", "sites", verbose = FALSE, driver = "ESRI Shapefile")
   write.dbf.SSN(sites.sub@data, "sites", max_nchar = 30)
 
   #create binaryID database in new .ssn folder
@@ -149,6 +154,7 @@ subsetSSN <- function(ssn, filename, subset, clip = FALSE) {
   setwd(oldwd)
 
   ssn.tmp
+  })
 }
 
 

@@ -2,7 +2,7 @@ hist.SpatialStreamNetwork <-
 function(x, VariableName, main, xlab, ...)
 {
 
-  if(class(x) != "SpatialStreamNetwork") stop("Not a SpatialStreamNetwork object")
+  if(class(x)[[1]] != "SpatialStreamNetwork") stop("Not a SpatialStreamNetwork object")
 
   if(missing(VariableName)) {
       VariableNames <- colnames(x@obspoints@SSNPoints[[1]]@point.data)

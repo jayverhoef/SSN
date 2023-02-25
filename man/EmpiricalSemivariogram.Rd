@@ -96,13 +96,16 @@ Jay Ver Hoef \email{support@SpatialStreamNetworks.com}
 \examples{
 
 library(SSN)
-# NOT RUN 
-# mf04 <- importSSN(system.file("lsndata/MiddleFork04.ssn", 
-#	        package = "SSN"), o.write = TRUE)
-# use SpatialStreamNetwork object mf04 that was already created
+#for examples, copy MiddleFork04.ssn directory to R's temporary directory
+copyLSN2temp()
+# NOT RUN
+# Create a SpatialStreamNetork object that also contains prediction sites
+#mf04 <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn', o.write = TRUE))
+#use mf04 SpatialStreamNetwork object, already created
 data(mf04)
-#make sure mf04 has the correct path, will vary for each users installation
-mf04 <- updatePath(mf04, system.file("lsndata/MiddleFork04.ssn", package = "SSN"))
+#for examples only, make sure mf04p has the correct path
+#if you use importSSN(), path will be correct
+mf04 <- updatePath(mf04, paste0(tempdir(),'/MiddleFork04.ssn'))
     
 # Compute the empirical semivariogram for the raw data. 
 # the number of pairs used to estimate the semivariance
@@ -116,8 +119,11 @@ plot(EVout$distance, EVout$gamma, pch = 19, cex = EVout$np/100, ylim = c(0,6),
 
 # generate and plot an empirical semivariogram based on model residuals
 data(modelFits)
-#make sure fitSP has the correct path, will vary for each users installation
-fitSp$ssn@path <- system.file("lsndata/MiddleFork04.ssn", package = "SSN")
+#for examples only, make sure fitSP has the correct path
+#if you use importSSN(), path will be correct
+fitSp$ssn.object <- updatePath(fitSp$ssn.object, 
+	paste0(tempdir(),'/MiddleFork04.ssn'))
+
 fitSpRes <- residuals(fitSp)
 names(getSSNdata.frame(fitSpRes))
 EVresid <- EmpiricalSemivariogram(fitSpRes, "_resid_", directions = 0, 

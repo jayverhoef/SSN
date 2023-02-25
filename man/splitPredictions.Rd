@@ -94,13 +94,13 @@ split3 <- splitPredictions(mf04, "pred1km", subset = netID == 1,
 summary(split3)
 
 ## Split the predictions after creating a glmssn object
-mf04.glmssn <- glmssn(Summer_mn ~ ELEV_DEM + SLOPE, mf04,
-    CorModels = c("Exponential.tailup", "Exponential.taildown",
-    "Exponential.Euclid"),addfunccol = "afvArea")
-mf04.glmssn$ssn.object <- splitPredictions(mf04.glmssn$ssn.object, "pred1km",
-    subset = netID == 1, new.id="netID-1")
-pred.split<- predict(mf04.glmssn, "netID-1")
-plot(pred.split)
+#mf04.glmssn <- glmssn(Summer_mn ~ ELEV_DEM + SLOPE, mf04,
+#    CorModels = c("Exponential.tailup", "Exponential.taildown",
+#    "Exponential.Euclid"),addfunccol = "afvArea")
+#mf04.glmssn$ssn.object <- splitPredictions(mf04.glmssn$ssn.object, "pred1km",
+#    subset = netID == 1, new.id="netID-1")
+#pred.split<- predict(mf04.glmssn, "netID-1")
+#plot(pred.split)
 
 }
 

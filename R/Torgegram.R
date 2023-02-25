@@ -2,7 +2,7 @@ Torgegram <- function(object, ResponseName,
 	maxlag = NULL, nlag = 6, inc = 0, nlagcutoff = 15, 
 	EmpVarMeth = "MethMoment")
 {
-	if(class(object) == "influenceSSN") object <- object$ssn.object
+	if(class(object)[[1]] == "influenceSSN") object <- object$ssn.object
 	data <- object@obspoints@SSNPoints[[1]]@point.data
 	data <- cbind(data, object@obspoints@SSNPoints[[1]]@point.coords)
 	xcol <- "coords.x1"

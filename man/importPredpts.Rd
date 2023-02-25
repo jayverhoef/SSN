@@ -55,13 +55,15 @@ importPredpts(target, predpts, obj.type)
 \examples{
 
 library(SSN)
-#mf04 <- importSSN(system.file("lsndata/MiddleFork04.ssn", 
-#  package = "SSN"), o.write = TRUE)
-#  use SpatialStreamNetwork object mf04 that was already created
-data(mf04)
-# for examples, copy MiddleFork04.ssn directory to R's temporary directory
+#for examples, copy MiddleFork04.ssn directory to R's temporary directory
 copyLSN2temp()
-#make sure mf04p has the correct path, will vary for each users installation
+# NOT RUN
+# Create a SpatialStreamNetork object that also contains prediction sites
+#mf04 <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn', o.write = TRUE))
+#use mf04 SpatialStreamNetwork object, already created
+data(mf04)
+#for examples only, make sure mf04p has the correct path
+#if you use importSSN(), path will be correct
 mf04 <- updatePath(mf04, paste0(tempdir(),'/MiddleFork04.ssn'))
 
 mf04p <- mf04
@@ -90,8 +92,10 @@ names(mf04p)
 # Add prediction points to a glmssn object
 # use models that have been created already
 data(modelFits)
-#make sure mf04 has the correct path, will vary for each users installation
-fitSp$ssn@path <- system.file("lsndata/MiddleFork04.ssn", package = "SSN")
+#for examples only, make sure fitSp has the correct path
+#if you use importSSN(), path will be correct
+fitSp$ssn.object <- updatePath(fitSp$ssn.object, 
+	paste0(tempdir(),'/MiddleFork04.ssn'))
 
 #use model named fitSp; NOT RUN; already imported
 #fitSp <- importPredpts(target = fitSp, predpts = "pred1km", 

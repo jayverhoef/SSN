@@ -10,7 +10,7 @@ plot.Torgegram <- function(x, sp.relationship = c("fc", "fu"),
     if(length(sp.relationship)  == 1)
 	if(sp.relationship != "fc" & sp.relationship != "fu")
             return("sp.relationship mis-specified")
-    if(class(x) != "Torgegram") return(
+    if(class(x)[[1]] != "Torgegram") return(
             "Not a Torgegram object")
     ev <- x
 

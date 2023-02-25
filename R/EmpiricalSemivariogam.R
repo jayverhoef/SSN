@@ -9,7 +9,7 @@ function(ssn.object, varName,
 #                                     z (response) in the third column
 {
 
-  if(class(ssn.object) == "influenceSSN") ssn.object <- ssn.object$ssn.object
+  if(class(ssn.object)[[1]] == "influenceSSN") ssn.object <- ssn.object$ssn.object
 	
   #if(class(ssn.object) == "SpatialStreamNetwork") {
     data <- ssn.object@obspoints@SSNPoints[[1]]@point.data

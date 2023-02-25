@@ -1,8 +1,8 @@
-citHeader("To cite R/SSN in publications use:")
+citation(auto = meta)
 
-citEntry(entry="article",
+bibentry(bibtype="Article",
 	title = "A moving average approach for spatial statistical models of stream networks (with discussion)",
-	author = personList(person(c("Jay", "M."), "Ver Hoef"), person(c("Erin", "E."), "Peterson")), 
+	author = c(person(c("Jay", "M."), "Ver Hoef"), person(c("Erin", "E."), "Peterson")), 
 	journal = "Journal of the American Statistical Association",
 	year = 2010, 
 	volume = 105,
@@ -10,9 +10,9 @@ citEntry(entry="article",
 	textVersion = "Ver Hoef, J. M. and Peterson, E. E. (2010) A moving average approach for spatial statistical models of stream networks (with discussion). Journal of the American Statistical Association 105:6-18. DOI: 10.1198/jasa.2009.ap08248"
 )
 
-citEntry(entry = "Article",
+bibentry(bibtype = "Article",
   title        = "{SSN}: An {R} Package for Spatial Statistical Modeling on Stream Networks",
-  author       = personList(as.person("Jay M. Ver Hoef"),
+  author       = c(as.person("Jay M. Ver Hoef"),
                    as.person("Erin E. Peterson"),
                    as.person("David Clifford"),
                    as.person("Rohan Shah")),
@@ -21,7 +21,7 @@ citEntry(entry = "Article",
   volume       = "56",
   number       = "3",
   pages        = "1--45",
-  url          = "http://www.jstatsoft.org/v56/i03/",
+  url          = "https://www.jstatsoft.org/article/view/v056i03",
 
   textVersion  =
   paste("Jay M. Ver Hoef, Erin E. Peterson, David Clifford, Rohan Shah (2014).",

@@ -1,7 +1,7 @@
 boxplot.SpatialStreamNetwork <-
 function(x, variable, ...)
 {
-    if(class(x) != "SpatialStreamNetwork") stop("Not a SpatialStreamNetwork object")
+    if(class(x)[[1]] != "SpatialStreamNetwork") stop("Not a SpatialStreamNetwork object")
 
     if(missing(variable)) {
       VariableNames <- colnames(x@obspoints@SSNPoints[[1]]@point.data)
@@ -18,7 +18,7 @@ function(x, variable, ...)
   }
 
     data1 <- x@obspoints@SSNPoints[[1]]@point.data
-    if(class(variable) == "formula") return(boxplot(variable, data = data1, ...))
+    if(class(variable)[[1]] == "formula") return(boxplot(variable, data = data1, ...))
     if(is.character(variable)) return(boxplot(data1[,variable], ...))
     return("Error: First argument must be character name or formula")
 }

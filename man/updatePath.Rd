@@ -36,15 +36,17 @@ Erin E. Peterson \email{support@SpatialStreamNetworks.com}
 \examples{
 library(SSN)
 
-## UPDATE PATH FOR SpatialStreamNetwork object
-## NOT RUN
-# mf04p <- importSSN(system.file("lsndata/MiddleFork04.ssn",
-#	  package = "SSN1.1"), predpts = "pred1km", o.write = TRUE)
-#   use SpatialStreamNetwork object mf04p that was already created
+#for examples, copy MiddleFork04.ssn directory to R's temporary directory
+copyLSN2temp()
+# NOT RUN
+# Create a SpatialStreamNetork object that also contains prediction sites
+#mf04p <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn'), 
+#  predpts = "pred1km", o.write = TRUE)
+#use mf04p SpatialStreamNetwork object, already created
 data(mf04p)
-
-## Update the path, which will vary for each users installation
-mf04p <- updatePath(mf04p, system.file("lsndata/MiddleFork04.ssn", package = "SSN"))
+#for examples only, make sure mf04p has the correct path
+#if you use importSSN(), path will be correct
+mf04p <- updatePath(mf04p, paste0(tempdir(),'/MiddleFork04.ssn'))
 
 
 ## UPDATE PATH FOR glmssn object
@@ -55,10 +57,10 @@ data(modelFits)
 ## binSp <- glmssn(MaxOver20 ~ ELEV_DEM + SLOPE, mf04p,
 ##   CorModels = c("Mariah.tailup", "Spherical.taildown"),
 ##   family = "binomial", addfunccol = "afvArea")
-
-## make sure binSp has the correct path, will vary for
-## each users installation
+##for examples only, make sure binSp has the correct path
+##if you use importSSN(), path will be correct
 binSp$ssn.object <- updatePath(binSp$ssn.object, 
-	system.file("lsndata/MiddleFork04.ssn", package = "SSN"))
+	paste0(tempdir(),'/MiddleFork04.ssn'))
+summary(binSp)
 
 }

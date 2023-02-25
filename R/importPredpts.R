@@ -32,21 +32,34 @@ function(target, predpts, obj.type) {
 
 
     if (file.exists(paste(predpts,".shp",sep = ""))==0) {
-      stop(paste(predpts,".shp data is missing from ", target@path, " folder",sep = ""))}
+      stop(paste(predpts,".shp data is missing from ", target@path, 
+						" folder",sep = ""))}
 
-    predpoints <- readOGR(".", predpts, verbose = FALSE, stringsAsFactors = FALSE,
-           integer64 = "allow.loss")
+    ## predpoints <- readOGR(".", predpts, verbose = FALSE, stringsAsFactors = FALSE,
+    ##                       integer64 = "allow.loss")
+    predpoints<- st_read(paste0(predpts, ".shp"), quiet=TRUE)
+       if (file.exists(paste(predpts,".shp",sep = ""))==0) {
+         stop(paste(predpts,".shp data is missing from ", target@path,
+                " folder",sep = ""))
+       }
+       ## Check geometry type
+       if (sum(st_geometry_type(predpoints, by_geometry=TRUE)=="POINT")!=nrow(predpoints)){
+         stop(paste0(predpts, " does not have point geometry"))
+       }
 
-    ##predpoints <- readShapeSpatial(predpts)
+    predpoints<- as_Spatial(predpoints)
+
+    ord = order(predpoints@data$pid)
+    predpoints@data <- predpoints@data[ord,]
+    predpoints@coords <- predpoints@coords[ord,]
+
     rownames(predpoints@data) <- predpoints@data[,"pid"]
     rownames(predpoints@coords) <- predpoints@data[,"pid"]
 
     predpoints@data$locID <- as.factor(predpoints@data$locID)
 
-    if (getinfo.shape(predpts)[[2]] != 1){
-      stop(paste(predpts,".shp does not have point geometry", sep = ""))}
-
-    network.point.coords <- data.frame(predpoints@data[,"netID"], predpoints@data[,"rid"], predpoints@data[,"upDist"])
+  network.point.coords <- data.frame(predpoints@data[,"netID"], predpoints@data[,"rid"],
+                                     predpoints@data[,"upDist"])
     colnames(network.point.coords)<-c("NetworkID", "SegmentID", "DistanceUpstream")
     network.point.coords <- as.data.frame(network.point.coords)
     row.names(network.point.coords) <- row.names(predpoints@data)

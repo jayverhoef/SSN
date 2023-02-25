@@ -1,5 +1,5 @@
 AIC.glmssn <- function(object,...,k=2) {
-    if(class(object) != "glmssn") return("Not a glmssn object")
+    if(class(object)[[1]] != "glmssn") return("Not a glmssn object")
     if(!missing(k)) cat("This argument has no effect\n")
     if(object$args$family == "poisson") return(NA)
     if(object$args$family =="binomial") return(NA)

@@ -70,13 +70,15 @@ Erin E. Peterson \email{support@SpatialStreamNetworks.com}
 \examples{
 
 library(SSN)
+# for examples, copy MiddleFork04.ssn directory to R's temporary directory
+copyLSN2temp()
+
 # Create a SpatialStreamNetwork object that does not contain prediction points
-mf04 <- importSSN(system.file("lsndata/MiddleFork04.ssn", 
-	package = "SSN"), o.write = TRUE)
+mf04 <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn'), o.write = TRUE)
 
 # Create a SpatialStreamNetork object that also contains prediction sites
-mf04p <- importSSN(system.file("lsndata/MiddleFork04.ssn", 
-	package = "SSN"), predpts = "pred1km", o.write = TRUE)
+mf04p <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn'), 
+  predpts = "pred1km", o.write = TRUE)
 names(mf04p)
 
 #NOT RUN Some graphics to explore imported object

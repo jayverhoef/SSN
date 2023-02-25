@@ -15,8 +15,7 @@ dataXY <- function(formula, data,
   # get a list of response and covariate names
   mod.names <- as.character(attr(terms(formula, data = data),"variables"))
 
-  tt <- try(model.matrix(formula,data))
-  if(class(tt)=="try-error") stop("The specified formula contains invalid variable names\n",tt)
+  tt <- model.matrix(formula,data)
 
   if(!all(mod.names[-1] %in% colnames(data))) stop("The specified formula causes problems in the dataXY function, try to use a simple formula, avoid indicator functions if you can.")
 
@@ -71,7 +70,7 @@ dataXY <- function(formula, data,
   data1[,response.col] <- rep(1, times = n.allcov)
   mf <- model.frame(formula, data = data1)
   mt <- attr(mf, "terms")
-  X1 <- model.matrix(mt, mf, contrasts)
+  X1 <- model.matrix(mt, mf)
   # get names for all terms and interactions, including those set to zero
   terms.list <- attr(mt,"term.labels")
   if(attr(mt,"intercept") == 1) effnames <- "(Intercept)"

@@ -69,9 +69,7 @@ SpatialStreamNetwork objects can be created by calls in the form \code{importSSN
   }
 }
 \section{Extends}{
-Class \link[sp:SpatialLinesDataFrame]{SpatialLinesDataFrame}, directly.
 Class \link[sp:SpatialLines-class]{SpatialLines-class}, by class "SpatialLinesDataFrame", distance 2.
-Class \link[sp:Spatial]{Spatial}, by class "SpatialLinesDataFrame", distance3.
 }
 
 \seealso{

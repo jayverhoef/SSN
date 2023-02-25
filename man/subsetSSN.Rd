@@ -44,14 +44,17 @@ Erin E. Peterson \email{support@SpatialStreamNetworks.com}
 }
 \examples{
 library(SSN)
-
-ssn <- importSSN(system.file("lsndata/MiddleFork04.ssn", package = "SSN"),
-    predpts = "pred1km")
+#for examples, copy MiddleFork04.ssn directory to R's temporary directory
+copyLSN2temp()
+# Create a SpatialStreamNetork object
+ssn <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn'), o.write = TRUE)
 
 ssn.sub1 <- subsetSSN(ssn, filename = 
   paste(tempdir(),"/subset1.ssn", sep = ""), subset = Summer_mn > 13)
-ssn.sub2 <- subsetSSN(ssn, filename = 
-  paste(tempdir(),"/subset2.ssn", sep = ""), subset = netID == 1, clip = TRUE)
+
+# another example
+#ssn.sub2 <- subsetSSN(ssn, filename = 
+#  paste(tempdir(),"/subset2.ssn", sep = ""), subset = netID == 1, clip = TRUE)
 
 
 }

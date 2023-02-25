@@ -1,7 +1,7 @@
 getStreamDistMat <- function(x, Name = "obs")
 {
   if(Name == "Obs") Name = "obs"
-  if(class(x) != "SpatialStreamNetwork")
+  if(class(x)[[1]] != "SpatialStreamNetwork")
     return("Object not of class SpatialStreamNetwork")
   path = paste0(x@path,"/distance/",Name)
   flist = list.files(path)

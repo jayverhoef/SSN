@@ -304,11 +304,9 @@ glmssn1 <- function(formula, ssn.object,
 			V <- Del.i*A.5*t((Del.i*A.5) * V)
 		}
 		##	if(min(svd(V)$d) < 0 ) {browser()}
-		qrV <- try(qr(V), silent = T)
+		qrV <- qr(V)
 		##	if(class(qrV) != "qr") {browser()}
-		ViX <- try(solve(qrV,X2), silent = T)
-		if(class(ViX) == "try-error")
-			return("Algorith diverged -- estimation stopped")
+		ViX <- solve(qrV,X2)
 		covbi <- t(X2) %*% ViX
 		covb <- solve(covbi)
 		if(family != "gaussian") beta.old <- beta.hat

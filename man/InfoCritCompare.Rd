@@ -107,6 +107,18 @@ Jay Ver Hoef \email{support@SpatialStreamNetworks.com}
 
 	library(SSN)
 	data(modelFits)
+	#for examples only, make sure all models have the correct path
+	#if you use importSSN(), path will be correct
+	fitNS$ssn.object <- updatePath(fitNS$ssn.object, 
+		paste0(tempdir(),'/MiddleFork04.ssn'))
+	fitRE$ssn.object <- updatePath(fitRE$ssn.object, 
+		paste0(tempdir(),'/MiddleFork04.ssn'))
+	fitSp$ssn.object <- updatePath(fitSp$ssn.object, 
+		paste0(tempdir(),'/MiddleFork04.ssn'))
+	fitSpRE1$ssn.object <- updatePath(fitSpRE1$ssn.object, 
+		paste0(tempdir(),'/MiddleFork04.ssn'))
+	fitSpRE2$ssn.object <- updatePath(fitSpRE2$ssn.object, 
+		paste0(tempdir(),'/MiddleFork04.ssn'))
 
   compare.models <- InfoCritCompare(list(fitNS, fitRE, fitSp, fitSpRE1, fitSpRE2))
   

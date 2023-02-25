@@ -5,7 +5,8 @@
 
 writeSSN <- function(ssn, filename, o.write = FALSE) {
 
-  suppressWarnings(warning("writeSSN"))
+  suppressWarnings({
+
 
   if(!file.exists(filename)) {
       dir.create(filename)
@@ -125,5 +126,6 @@ writeSSN <- function(ssn, filename, o.write = FALSE) {
   setwd(oldwd)
 
   ##ssn.tmp
+})
 }
 

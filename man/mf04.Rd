@@ -19,6 +19,8 @@ imported SpatialStreamNetwork object from MiddleFork04.ssn data folder
 
 \examples{
 library(SSN)
-mf04 <- importSSN(system.file("lsndata/MiddleFork04.ssn", package = "SSN"))
+#for examples, copy MiddleFork04.ssn directory to R's temporary directory
+copyLSN2temp()
+mf04 <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn'), o.write = TRUE)
 names(mf04)
 }

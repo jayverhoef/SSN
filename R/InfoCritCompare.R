@@ -5,7 +5,7 @@ function(model.list)
 
    for(i in 1:length(model.list)) {
 
-	 if(class(model.list[[i]])!= "glmssn") {
+	 if(class(model.list[[i]])[[1]] != "glmssn") {
 		 stop("All models must be of type glmssn")
 	 }
 

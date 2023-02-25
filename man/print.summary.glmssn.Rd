@@ -58,8 +58,10 @@ Jay Ver Hoef \email{support@SpatialStreamNetworks.com}
 
 	library(SSN)
 	data(modelFits)
-	#make sure fitSp has the correct path, will vary for each users installation
-	fitSp$ssn.object@path <- system.file("lsndata/MiddleFork04.ssn", package = "SSN")
+	#for examples only, make sure fitSp has the correct path
+	#if you use importSSN(), path will be correct
+	fitSp$ssn.object <- updatePath(fitSp$ssn.object, 
+		paste0(tempdir(),'/MiddleFork04.ssn'))
 	names(fitSp)
 	names(fitSp$ssn.object)
 

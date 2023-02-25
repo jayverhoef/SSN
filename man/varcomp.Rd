@@ -35,13 +35,17 @@ Jay Ver Hoef \email{support@SpatialStreamNetworks.com}
 \examples{
 
 	library(SSN)
-	# NOT RUN 
-	#mf04p <- importSSN(system.file("lsndata/MiddleFork04.ssn", 
-	#  package = "SSN"), predpts = "pred1km", o.write = TRUE)
-	#  use SpatialStreamNetwork object mf04p that was already created
+	#for examples, copy MiddleFork04.ssn directory to R's temporary directory
+	copyLSN2temp()
+	# NOT RUN
+	# Create a SpatialStreamNetork object that also contains prediction sites
+	#mf04p <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn'), 
+	#  predpts = "pred1km", o.write = TRUE)
+	#use mf04p SpatialStreamNetwork object, already created
 	data(mf04p)
-	#make sure mf04p has the correct path, will vary for each users installation
-	mf04p@path <- system.file("lsndata/MiddleFork04.ssn", package = "SSN")
+	#for examples only, make sure mf04p has the correct path
+	#if you use importSSN(), path will be correct
+	mf04p <- updatePath(mf04p, paste0(tempdir(),'/MiddleFork04.ssn'))
 		  
 	# get some model fits stored as data objects
 	data(modelFits)
@@ -50,8 +54,10 @@ Jay Ver Hoef \email{support@SpatialStreamNetworks.com}
 	#    ssn.object = mf04p, EstMeth = "REML", family = "Gaussian",
 	#    CorModels = c("Exponential.tailup","Exponential.taildown",
 	#    "Exponential.Euclid"), addfunccol = "afvArea")
-	#make sure fitSP has the correct path, will vary for each users installation
-	fitSp$ssn@path <- system.file("lsndata/MiddleFork04.ssn", package = "SSN")
+	#for examples only, make sure fitSp has the correct path
+	#if you use importSSN(), path will be correct
+	fitSp$ssn.object <- updatePath(fitSp$ssn.object, 
+		paste0(tempdir(),'/MiddleFork04.ssn'))
 
 	varcomp(fitSp)
 

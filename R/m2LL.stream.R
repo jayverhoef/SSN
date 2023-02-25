@@ -23,10 +23,8 @@ m2LL.stream <- function(theta, m2LLdata, X, dist.hydro = NULL,
 	V.eigenvalues <- eigen(V, symmetric=TRUE, only.values=TRUE)
 	if(any(V.eigenvalues$values <=0)) stop("covariance matrix is not positive definite")
 	if(!is.null(Del.i)) V <- Del.i*A.5*t((Del.i*A.5) * V)
-	qrV <- try(qr(V), silent = T)
-	if(class(qrV) == "try-error") return(1e+32)
-	ViX <- try(solve(qrV,X), silent = T)
-	if(class(ViX) == "try-error") return(1e+32)
+	qrV <- qr(V)
+	ViX <- solve(qrV,X)
 	covbi <- crossprod(X,ViX) ## Computationally more efficient than covbi <- t(X) %*% ViX
 	covb <- solve(covbi)
 	b.hat <- covb %*% crossprod(ViX,z) ##b.hat <- covb %*% t(ViX) %*% z

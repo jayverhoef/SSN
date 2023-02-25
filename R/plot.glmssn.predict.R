@@ -5,7 +5,7 @@ function(x, VariableName = NULL, VarPlot = "Both",
   SEcex.min = 0.5, SEcex.max = 2, brks = NULL, add = FALSE, ...)
 {
     par.orig <- par(no.readonly = TRUE)
-    if(class(x) != "glmssn.predict") return("Not a glmssn.predict object")
+    if(class(x)[[1]] != "glmssn.predict") return("Not a glmssn.predict object")
     if(!any(VarPlot == c("Both", "Predictions", "Standard Errors")))
 	return("VarPlot must be one of Both, Predictions, or Standard Errors")
     if(!any(breaktype == c("quantile", "even", "user")))
@@ -27,8 +27,7 @@ function(x, VariableName = NULL, VarPlot = "Both",
         par(mar = c(5,5,3,0))
         plot(x$ssn.object@bbox[1,],x$ssn.object@bbox[2,], type = "n",
              xlab = "x-coordinate", ylab = "y-coordinate",
-             main = paste("Prediction Variable = ", zcol, ":  Plotting", VarPlot),
-             cex.main = .9, ...)
+             main = paste("Prediction Variable = ", zcol, ":  Plotting", VarPlot), ...)
         for(i in 1:length(x$ssn.object@lines))
             for(j in 1:length(x$ssn.object@lines[[i]]))
                 lines((x$ssn.object@lines[[i]]@Lines[[j]]@coords), ...)

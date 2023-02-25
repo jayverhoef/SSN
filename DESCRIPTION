@@ -1,13 +1,14 @@
 Package: SSN
 Type: Package
 Title: Spatial Modeling on Stream Networks
-Version: 1.1.10
-Date: 2017-03-22
-Depends: R (>= 3.3.3), RSQLite (>= 1.1-2), sp
-Imports: MASS, igraph (>= 1.0.0), maptools, lattice, methods, Matrix, rgdal (>= 1.2-5), rgeos (>= 0.3-22) 
-Author: Jay Ver Hoef and Erin Peterson
+Version: 1.1.18
+Date: 2023-02-25
+Depends: R (>= 4.0.0), RSQLite (>= 1.1-2), sf, sp
+Imports: MASS, igraph (>= 1.0.0), lattice, methods, Matrix, rgdal (>= 1.2-5), rgeos (>= 0.3-22) 
+Authors@R: c(person("Jay", "Ver Hoef", role = c("aut", "cre"), email = "ver.hoef@SpatialStreamNetworks.com"),
+             person("Erin", "Peterson", role = c("aut"), email = "peterson@SpatialStreamNetworks.com"))
 Maintainer: Jay Ver Hoef <ver.hoef@SpatialStreamNetworks.com>
-Description: Spatial statistical modeling and prediction for data on stream networks, including models based on in-stream distance.  Models are created using moving average constructions. Spatial linear models, including explanatory variables, can be fit with (restricted) maximum likelihood.  Mapping and other graphical functions are included.
+Description: Spatial statistical modeling and prediction for data on stream networks, including models based on in-stream distance (Ver Hoef, J.M. and Peterson, E.E., 2010. <DOI:10.1198/jasa.2009.ap08248>.) Models are created using moving average constructions. Spatial linear models, including explanatory variables, can be fit with (restricted) maximum likelihood.  Mapping and other graphical functions are included. 
 License: GPL-2
 LazyLoad: yes
 LinkingTo: BH

@@ -128,6 +128,7 @@ iterativeTreeLayout <- function(n)
 
 createSSN <- function(n, obsDesign, predDesign = noPoints, path, importToR = FALSE, treeFunction = igraphKamadaKawai)
 {
+	suppressWarnings({
 #	if(!require(igraph))
 #	{
 #		stop("simulate requires access to the igraph package")
@@ -595,4 +596,5 @@ createSSN <- function(n, obsDesign, predDesign = noPoints, path, importToR = FAL
 		else return(importSSN(path, o.write=TRUE))
 	}
 	else return(invisible(NULL))
+})
 }

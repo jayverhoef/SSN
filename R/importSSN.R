@@ -12,31 +12,40 @@ function(filepath, predpts = NULL, o.write = FALSE) {
 
   # IMPORT SHAPEFILES- these are stored as a SpatialLinesDataFrame and
   #    a SpatialPointsDataFrame
-
-  edges <- readOGR(".", "edges",verbose = FALSE, stringsAsFactors = FALSE,
-           integer64 = "allow.loss")
-  rownames(edges@data) <- edges@data[,"rid"]
-
+  ## edges <- readOGR(".", "edges",verbose = FALSE, stringsAsFactors = FALSE,
+  ##          integer64 = "allow.loss")
+  edges<- st_read("edges.shp",quiet=TRUE)
 
   if (exists("edges")==0) {
     stop("edges.shp is missing from ", Path, " folder")
   }
-  if (getinfo.shape("edges.shp")[[2]] != 3 & getinfo.shape("edges.shp")[[2]] != 13 ){
+  ## Check geometry type
+  if (sum(st_geometry_type(edges, by_geometry=TRUE)=="LINESTRING") != nrow(edges)){
     stop("edges.shp does not have polyline geometry")
   }
+  edges<- as_Spatial(edges)
+  rownames(edges@data) <- edges@data[,"rid"]
 
-  sites <- readOGR(".", "sites",verbose = FALSE, stringsAsFactors = FALSE,
-           integer64 = "allow.loss")
-  rownames(sites@data) <- sites@data[,"pid"]
-  rownames(sites@coords) <- sites@data[,"pid"]
-  sites@data$locID <- as.factor(sites@data$locID)
-
+  ##sites <- readOGR(".", "sites",verbose = FALSE, stringsAsFactors = FALSE,
+    ##               integer64 = "allow.loss")
+  sites<- st_read("sites.shp", quiet=TRUE)
+  ## Check geometry
   if (exists("sites")==0) {
     stop("sites.shp data is missing from ", Path," ssn folder")
   }
-  if (getinfo.shape("sites.shp")[[2]] != 1){
+  if (sum(st_geometry_type(sites, by_geometry=TRUE)=="POINT")!= nrow(sites)){
     stop("sites.shp does not have point geometry")
   }
+  sites<- as_Spatial(sites)
+  ord = order(sites@data$pid)
+  sites@data <- sites@data[ord,]
+  sites@coords <- sites@coords[ord,]
+  rownames(sites@data) <- sites@data[,"pid"]
+  rownames(sites@coords) <- sites@data[,"pid"]
+
+  sites@data$locID <- as.factor(sites@data$locID)
+
+
 
   # SET NETWORK.LINE.COORDS
   ind1 <- colnames(edges@data)== c("netID")
@@ -103,7 +112,8 @@ function(filepath, predpts = NULL, o.write = FALSE) {
     network.point.coords = network.point.coords,
     point.coords = sites@coords,
     point.data = sites@data,
-    points.bbox = sites@bbox)
+    points.bbox = sites@bbox,
+    proj4string = sites@proj4string)
 
   #Create SSNPoints list for input into SSN object
   ops<-new("SSNPoints")
@@ -114,19 +124,33 @@ function(filepath, predpts = NULL, o.write = FALSE) {
 
   #Add prediction points here-----------------------------------------------------
   if (!is.null(predpts)) {
-      predpoints <- readOGR(".", predpts, verbose = FALSE, stringsAsFactors = FALSE,
-           integer64 = "allow.loss")
-      ##predpoints <- readShapeSpatial(predpts)
+      ## predpoints <- readOGR(".", predpts, verbose = FALSE, stringsAsFactors = FALSE,
+      ##      integer64 = "allow.loss")
+      predpoints<- st_read(paste0(predpts, ".shp"), quiet=TRUE)
+     if (file.exists(paste(predpts,".shp",sep = ""))==0) {
+       stop(paste(predpts,".shp data is missing from ", Path, "/", ssn.obj,
+                " folder",sep = ""))
+     }
+     ## Check geometry type
+     if (sum(st_geometry_type(predpoints, by_geometry=TRUE)=="POINT")!=nrow(predpoints)){
+       stop(paste0(predpts, " does not have point geometry"))
+     }
+     predpoints<- as_Spatial(predpoints)
+
+      ord = order(predpoints@data$pid)
+      predpoints@data <- predpoints@data[ord,]
+      predpoints@coords <- predpoints@coords[ord,]
+
       rownames(predpoints@data) <- predpoints@data[,"pid"]
       rownames(predpoints@coords) <- predpoints@data[,"pid"]
       predpoints@data$locID <- as.factor(predpoints@data$locID)
 
-      if (file.exists(paste(predpts,".shp",sep = ""))==0) {
-        stop(paste(predpts,".shp data is missing from ", Path, "/", ssn.obj, " folder",sep = ""))
-      }
-      if (getinfo.shape(predpts)[[2]] != 1){
-        stop(paste(predpts,".shp does not have point geometry", sep = ""))
-      }
+      ## if (file.exists(paste(predpts,".shp",sep = ""))==0) {
+      ##   stop(paste(predpts,".shp data is missing from ", Path, "/", ssn.obj, " folder",sep = ""))
+      ## }
+      ## if (getinfo.shape(predpts)[[2]] != 1){
+      ##   stop(paste(predpts,".shp does not have point geometry", sep = ""))
+      ## }
 
       if (is.factor(predpoints@data$netID)) {
         predpoints@data$netID <- as.character(predpoints@data$netID) }
@@ -146,7 +170,8 @@ function(filepath, predpts = NULL, o.write = FALSE) {
         network.point.coords = network.point.coords,
         point.coords = predpoints@coords,
         point.data = predpoints@data,
-        points.bbox = predpoints@bbox)
+        points.bbox = predpoints@bbox,
+        proj4string = predpoints@proj4string)
 
 #        ssn@predpoints@SSNPoints[[1]]<- pp
 #        ssn@predpoints@ID[[1]]<- predpts

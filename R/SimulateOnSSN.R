@@ -424,7 +424,7 @@ SimulateOnSSN <- function(ssn.object,
 		  as.character(formula)[2]))
   	mf <- model.frame(formula1, data = SimDF)
   	mt <- attr(mf, "terms")
-  	X1 <- model.matrix(mt, mf, contrasts)
+  	X1 <- model.matrix(mt, mf)
 	nsim <- length(X1[,1])
 	if(length(X1[1,]) != length(coefficients)) {
 	print("Number of coefficients not correct based on formula specification")

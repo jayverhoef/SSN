@@ -12,42 +12,36 @@ Creates spatial stream network representations in R and fits spatial models.
 \tabular{ll}{
 Package: \tab SSN\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2011-02-09\cr
+Version: \tab 1.1.12\cr
+Date: \tab 2018-01-24\cr
 License: \tab GPL-2 \cr
 LazyLoad: \tab yes\cr
 }
 
 
-The SSN package provides tools to fit generalized linear models with spatial 
-autocorrelation using normal likelihood methods (including REML) and quasi-likelihood 
-for Poisson and Binomial families. The spatial formulation is described in Ver Hoef 
-and Peterson (2010) and Peterson and Ver Hoef (2010). The spatial data must be formatted
-in a geographic information system (GIS) prior to importing it into R. Two custom 
-ArcGIS toolboxes (v 9.3.1) have been provided to format the data: the Functional Linkage 
-of Water Basins and Streams(FLoWS; Theobald et al. 2006) and the Spatial Tools for
-the Analysis of River Systems (STARS) tooset (Peterson 2011).  
-
-
+The SSN package provides tools to fit generalized linear models with spatial autocorrelation for stream network data.  SSN uses normal likelihood methods (including REML) and quasi-likelihood for Poisson and Binomial families. The spatial formulation was originally described in Ver Hoef, Peterson, and Theobald (2006), with more details given by Ver Hoef and Peterson (2010) and Peterson and Ver Hoef (2010). The spatial data must be formatted in a geographic information system (GIS) prior to importing it into R. A custom  ArcGIS toolbox has been provided to format the data:  Spatial Tools for the Analysis of River Systems (STARS) toolset (Peterson and Ver Hoef, 2014), and the SSN package is fully described in Ver Hoef, Peterson, Clifford, and Shah (2014).
 }
 \author{
 Jay Ver Hoef and Erin Peterson \email{support@SpatialStreamNetworks.com}
 }
 \references{
-\cite{Ver Hoef, J. M. and Peterson, E. E. (2010) A moving average approach for 
-spatial statistical models of stream networks (with discussion). \emph{Journal of the American Statistical Association} 
-\bold{105}, 6--18. DOI: 10.1198/jasa.2009.ap08248.  Rejoinder pgs. 22 - 24.}
 
-\cite{Peterson, E. E. and Ver Hoef, J. M. (2010) A mixed-model moving-average 
-approach to geostatistical modeling in stream networks. \emph{Ecology} 
+\cite{Ver Hoef, J. M., Peterson, E. E. and Theobald, D. (2006) Spatial Statistical Models that
+Use Flow and Stream Distance. \emph{Environmental and Ecological Statistics} \bold{13}, 449--464.}
+
+\cite{Ver Hoef, J. M. and Peterson, E. E. (2010) A Moving Average Approach for 
+Spatial Statistical Models of Stream Networks (with Discussion). \emph{Journal of the American Statistical Association} \bold{105}, 6--18. DOI: 10.1198/jasa.2009.ap08248.  Rejoinder pgs. 22--24.}
+
+\cite{Peterson, E. E. and Ver Hoef, J. M. (2010) A Mixed-Model Moving-Average 
+Approach to Geostatistical Modeling in Stream Networks. \emph{Ecology} 
 \bold{91(3)}, 644--651.}
 
-\cite{Peterson E.E.(2011)STARS: Spatial Tools for the Analysis of River Systems:
-A tutorial. CSIRO Technical Report EP111313. 42p.}
+\cite{Peterson, E. E. and Ver Hoef, J. M. 2014. STARS: An ArcGIS Toolset Used to
+Calculate the Spatial Information Needed to Fit Spatial Statistical Models to Stream
+Network Data . \emph{Journal of Statistical Software} \bold{56(2)}: 1--17.}
 
-\cite{Theobald D.M., Norman J.B., Peterson E.E., Ferraz S., Wade A., and Sherburne M.R. 
-(2006) Functional Linkage of Water Basins and Streams (FLoWS) v1 User's Guide: ArcGIS 
-tools for Network-based analysis of freshwater ecosystems. Natural Resource Ecology Lab, 
-Colorado State University, Fort Collins, USA.}
+\cite{Ver Hoef, J. M., Peterson, E. E., Clifford, D. and Shah, R. (2014) SSN: An R Package
+for Spatial Statistical Modeling on Stream Networks. \emph{Journal of Statistical Software}
+\bold{56(3)}: 1--45.}
 
 }

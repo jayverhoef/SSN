@@ -50,15 +50,17 @@ David Clifford \email{support@SpatialStreamNetworks.com}
 \examples{
 
 library(SSN)
-# NOT RUN 
-# mf04 <- importSSN(system.file("lsndata/MiddleFork04.ssn", 
-#	        package = "SSN"), o.write = TRUE)
-# use SpatialStreamNetwork object mf04 that was already created
-data(mf04)
-# for examples, copy MiddleFork04.ssn directory to R's temporary directory
+#for examples, copy MiddleFork04.ssn directory to R's temporary directory
 copyLSN2temp()
-#make sure mf04p has the correct path, will vary for each users installation
-mf04 <- updatePath(mf04, paste0(tempdir(),'/MiddleFork04.ssn'))
+# NOT RUN
+# Create a SpatialStreamNetork object that also contains prediction sites
+#mf04p <- importSSN(paste0(tempdir(),'/MiddleFork04.ssn'), 
+#  predpts = "pred1km", o.write = TRUE)
+#use mf04p SpatialStreamNetwork object, already created
+data(mf04p)
+#for examples only, make sure mf04p has the correct path
+#if you use importSSN(), path will be correct
+mf04p <- updatePath(mf04p, paste0(tempdir(),'/MiddleFork04.ssn'))
 
 ## NOT RUN Distance Matrix has already been created
 ## createDistMat(mf04)
@@ -72,6 +74,11 @@ data(modelFits)
 #fitRE <- glmssn(Summer_mn ~ ELEV_DEM + netID,
 #    ssn.object = mf04, EstMeth = "REML", family = "Gaussian",
 #    CorModels = c("STREAMNAME"))
+#for examples only, make sure fitRE has the correct path
+#if you use importSSN(), path will be correct
+fitRE$ssn.object <- updatePath(fitRE$ssn.object, 
+	paste0(tempdir(),'/MiddleFork04.ssn'))
+
 summary(fitRE)
 ## random effects details
 fitREBLUP <- BLUP(fitRE)
@@ -83,6 +90,11 @@ fitREBLUP$Mean
 #    ssn.object = mf04, EstMeth = "REML", family = "Gaussian",
 #    CorModels = c("STREAMNAME","Exponential.tailup"),
 #    addfunccol = "afvArea")
+#for examples only, make sure fitRE has the correct path
+#if you use importSSN(), path will be correct
+fitSpRE1$ssn.object <- updatePath(fitSpRE1$ssn.object, 
+	paste0(tempdir(),'/MiddleFork04.ssn'))
+
 fitRE1BLUP <- BLUP(fitSpRE1)
 str(fitRE1BLUP)
 fitRE1BLUP$Mean

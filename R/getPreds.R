@@ -8,14 +8,7 @@
 getPreds <- function(x,pred.type="cv") {
 
     if(pred.type == "cv") {
-        pred.tmp <- CrossValidationSSN(x)
-
-        pred.mat <- matrix(data = NA, nrow = nrow(pred.tmp), ncol = 3)
-        colnames(pred.mat) <- c("pid", "cv.pred", "cv.se")
-
-        pred.mat[,"pid"]<- x$ssn.object@obspoints@SSNPoints[[1]]@point.data[,"pid"]
-        pred.mat[,"cv.pred"]<- pred.tmp[,"cv.pred"]
-        pred.mat[,"cv.se"]<- pred.tmp[,"cv.se"]
+        pred.mat <- CrossValidationSSN(x)
 
     } else if(pred.type == "pred")  {
         if (length(x$ssn.object@predpoints@ID) == 0) {

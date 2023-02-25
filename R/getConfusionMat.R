@@ -3,7 +3,7 @@
 getConfusionMat <- function(x, threshold = 0.5) {
 
     ## Check that class of x is data.frame or influenceSSN
-    if(class(x) != "influenceSSN") {
+    if(class(x)[[1]] != "influenceSSN") {
         stop("x must be a an influenceSSN object, which is
               created by the residuals function.")}
     x1 <- getSSNdata.frame(x$ssn.object)

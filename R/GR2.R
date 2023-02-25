@@ -1,7 +1,7 @@
 GR2 <-
 function(object)
 {
-  if(class(object) != "glmssn") return("Not a glmssn object")
+  if(class(object)[[1]] != "glmssn") return("Not a glmssn object")
   W <- object$sampinfo$X
   Vi <- object$estimates$Vi
   z <- object$sampinfo$z
