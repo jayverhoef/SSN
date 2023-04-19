@@ -1,5 +1,5 @@
 %\VignetteIndexEntry{GIS Information and STARS User manual}
-% cd '/mnt/Hitachi2GB/00NMML/ActiveRPack/SSN_package/SSN/vignettes'
+% cd '/mnt/ExtraDrive1/Work/desktop_data/ActiveRPack/SSN_Jays_github/SSN/vignettes'
 % Rscript -e "library(knitr); knit('STARS.Rnw')"
 % pdflatex STARS
 \documentclass{article}
