@@ -34,7 +34,7 @@ the specific spatial data needed to fit spatial stream-network models.
 
 
 \begin{center}
-	\href{https://www.fs.usda.gov/rm/boise/AWAE/projects/SSN_STARS/latest_releases.html}{\Large STARS}
+	\href{https://www.fs.usda.gov/rm/boise/AWAE/projects/SSN_STARS/software_data.html#STARS}{\Large STARS}
 \end{center}
 
 \end{document}
