@@ -34,7 +34,7 @@ arg.error.check.multi <- function(CorModels = c("Exponential.taildown"),
 
     ## check to make sure we have necessary arguments for stream and
     ## Euclidean distance models
-    if(!(is.null(CorModels) || is.na(CorModels))) {
+    if(!(is.null(CorModels) || any(is.na(CorModels)))) {
         if(length(setdiff(CorModels,Models))) {
             return(list(Err = 1, message = "Not a valid autocorrelation model model for CorModels"))
         }
